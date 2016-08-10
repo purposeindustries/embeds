@@ -459,3 +459,21 @@ test('acast', t => {
   t.deepEqual(parseInput(acastCode), expected);
   t.deepEqual(parseInput('https://embed.acast.com/specialrelationship/-1-terrorismandnationalsecurity'), expected);
 });
+
+test('scribd', t => {
+  const scribdCode = tsml`
+    <iframe class="scribd_iframe_embed"
+    src="https://www.scribd.com/embeds/320741042/content?start_page=1&view_mode=scroll&access_key=key-1mpoU4LMiQy0sf1mx8pe&show_recommendations=false"
+    data-auto-height="false"
+    data-aspect-ratio="0.7729220222793488"
+    scrolling="no" id="doc_61832" width="600" height="800" frameborder="0"></iframe>`;
+
+  const expected = {
+    type: 'scribd',
+    id: '320741042',
+    url: 'https://www.scribd.com/embeds/320741042/content'
+  };
+
+  t.deepEqual(parseInput(scribdCode), expected);
+  t.deepEqual(parseInput('https://www.scribd.com/embeds/320741042/content'), expected);
+});
