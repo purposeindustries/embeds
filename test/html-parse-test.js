@@ -1,7 +1,8 @@
+/* eslint-disable max-len */
+import queryDom from 'query-dom'; // eslint-disable-line import/no-extraneous-dependencies
+import tsml from 'tsml'; // eslint-disable-line import/no-extraneous-dependencies
+import { parse as _parse } from '../lib';
 import test from './tape-wrapper';
-import {parse as _parse} from '../lib';
-import queryDom from 'query-dom';
-import tsml from 'tsml';
 import fixtures from './fixtures';
 
 const parse = process.browser
@@ -150,7 +151,7 @@ test('parse() video with width & height css', t => {
 });
 
 test('parse() youtube iframe', t => {
-  const input = `<iframe src="https://www.youtube.com/embed/pDVmldTurqk"></iframe>`;
+  const input = '<iframe src="https://www.youtube.com/embed/pDVmldTurqk"></iframe>';
   const actual = parse(input);
   const expected = {
     type: 'youtube',
@@ -172,14 +173,14 @@ test('parse() youtube embedly iframe', t => {
 });
 
 test('parse() tweet - normal', t => {
-  const input = `<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const input = '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
   const actual = parse(input);
   const expected = {
     type: 'twitter',
     embedAs: 'tweet',
     text: [
-      {content: 'GIF vs. JIF… This ', href: null},
-      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
+      { content: 'GIF vs. JIF… This ', href: null },
+      { content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6' }
     ],
     url: 'https://twitter.com/MattNavarra/status/684690494841028608',
     date: 'January 6, 2016',
@@ -193,20 +194,20 @@ test('parse() tweet - normal', t => {
 });
 
 test('parse() tweet - video', t => {
-  const input = `<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr">Surfer <a href="https://twitter.com/bethanyhamilton">@bethanyhamilton</a>, who lost her arm in a 2003 shark attack, finishes 3rd in <a href="https://twitter.com/wsl">@wsl</a> Fiji. <a href="https://twitter.com/hashtag/VideoOfTheDay?src=hash">#VideoOfTheDay</a> <a href="https://t.co/elSAwTdP6L">pic.twitter.com/elSAwTdP6L</a></p>&mdash; Twitter Video (@video) <a href="https://twitter.com/video/status/737840608895762432">June 1, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const input = '<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr">Surfer <a href="https://twitter.com/bethanyhamilton">@bethanyhamilton</a>, who lost her arm in a 2003 shark attack, finishes 3rd in <a href="https://twitter.com/wsl">@wsl</a> Fiji. <a href="https://twitter.com/hashtag/VideoOfTheDay?src=hash">#VideoOfTheDay</a> <a href="https://t.co/elSAwTdP6L">pic.twitter.com/elSAwTdP6L</a></p>&mdash; Twitter Video (@video) <a href="https://twitter.com/video/status/737840608895762432">June 1, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
   const actual = parse(input);
   const expected = {
     type: 'twitter',
     embedAs: 'video',
     text: [
-      {content: 'Surfer ', href: null},
-      {content: '@bethanyhamilton', href: 'https://twitter.com/bethanyhamilton'},
-      {content: ', who lost her arm in a 2003 shark attack, finishes 3rd in ', href: null},
-      {content: '@wsl', href: 'https://twitter.com/wsl'},
-      {content: ' Fiji. ', href: null},
-      {content: '#VideoOfTheDay', href: 'https://twitter.com/hashtag/VideoOfTheDay?src=hash'},
-      {content: ' ', href: null},
-      {content: 'pic.twitter.com/elSAwTdP6L', href: 'https://t.co/elSAwTdP6L'}
+      { content: 'Surfer ', href: null },
+      { content: '@bethanyhamilton', href: 'https://twitter.com/bethanyhamilton' },
+      { content: ', who lost her arm in a 2003 shark attack, finishes 3rd in ', href: null },
+      { content: '@wsl', href: 'https://twitter.com/wsl' },
+      { content: ' Fiji. ', href: null },
+      { content: '#VideoOfTheDay', href: 'https://twitter.com/hashtag/VideoOfTheDay?src=hash' },
+      { content: ' ', href: null },
+      { content: 'pic.twitter.com/elSAwTdP6L', href: 'https://t.co/elSAwTdP6L' }
     ],
     url: 'https://twitter.com/video/status/737840608895762432',
     date: 'June 1, 2016',
@@ -220,14 +221,14 @@ test('parse() tweet - video', t => {
 });
 
 test('parse() tweet - no date', t => {
-  const input = `<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608"></a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const input = '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608"></a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
   const actual = parse(input);
   const expected = {
     type: 'twitter',
     embedAs: 'tweet',
     text: [
-      {content: 'GIF vs. JIF… This ', href: null},
-      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
+      { content: 'GIF vs. JIF… This ', href: null },
+      { content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6' }
     ],
     url: 'https://twitter.com/MattNavarra/status/684690494841028608',
     date: '',
@@ -241,16 +242,16 @@ test('parse() tweet - no date', t => {
 });
 
 test('parse() tweet - weird input', t => {
-  const input = `<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">foo bar<beep>boop</beep></p>&mdash; Matt Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const input = '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">foo bar<beep>boop</beep></p>&mdash; Matt Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
   const actual = parse(input).text;
   const expected = [
-    {content: 'foo bar', href: null}
+    { content: 'foo bar', href: null }
   ];
   t.deepEqual(actual, expected);
 });
 
 test('parse() tweet - no paragraph, no user', t => {
-  const input = `<blockquote class="twitter-tweet" data-lang="en"><a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const input = '<blockquote class="twitter-tweet" data-lang="en"><a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
   const actual = parse(input);
   const expected = {
     type: 'twitter',
@@ -268,14 +269,14 @@ test('parse() tweet - no paragraph, no user', t => {
 });
 
 test('parse() tweet - no id', t => {
-  const input = `<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) </blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const input = '<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) </blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
   const actual = parse(input);
   const expected = null;
   t.deepEqual(actual, expected);
 });
 
 test('parse() instagram http iframe', t => {
-  const input = `<iframe src="http://instagram.com/p/fdx1CSuEPV/embed"></iframe>`;
+  const input = '<iframe src="http://instagram.com/p/fdx1CSuEPV/embed"></iframe>';
   const actual = parse(input);
   const expected = {
     type: 'instagram',
@@ -287,7 +288,7 @@ test('parse() instagram http iframe', t => {
 });
 
 test('parse() instagram https iframe', t => {
-  const input = `<iframe src="https://instagram.com/p/fdx1CSuEPV/embed"></iframe>`;
+  const input = '<iframe src="https://instagram.com/p/fdx1CSuEPV/embed"></iframe>';
   const actual = parse(input);
   const expected = {
     type: 'instagram',
@@ -299,7 +300,7 @@ test('parse() instagram https iframe', t => {
 });
 
 test('parse() instagram www iframe', t => {
-  const input = `<iframe src="http://www.instagram.com/p/fdx1CSuEPV/embed"></iframe>`;
+  const input = '<iframe src="http://www.instagram.com/p/fdx1CSuEPV/embed"></iframe>';
   const actual = parse(input);
   const expected = {
     type: 'instagram',
@@ -351,7 +352,7 @@ test('parse() instagram - without caption', t => {
 });
 
 test('parse() instagram - bad input', t => {
-  const input = `<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="6" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"></blockquote>`;
+  const input = '<blockquote class="instagram-media" data-instgrm-captioned data-instgrm-version="6" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:658px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"></blockquote>';
   const actual = parse(input);
   const expected = null;
   t.deepEqual(actual, expected);
