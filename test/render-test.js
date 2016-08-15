@@ -1,11 +1,11 @@
-import { renderToStaticMarkup } from 'react-dom/server'; // eslint-disable-line
-import tsml from 'tsml'; // eslint-disable-line
 import test from './tape-wrapper';
-import { render as _render } from '../lib';
+import {render as _render} from '../lib';
+import tsml from 'tsml';
+import {renderString, tree} from 'deku';
 import fixtures from './fixtures';
 import renderText from '../lib/render-text';
 
-const render = opts => renderToStaticMarkup(_render(opts));
+const render = opts => renderString(tree(_render(opts)));
 
 test('render() img', t => {
   const actual = render({
@@ -15,7 +15,7 @@ test('render() img', t => {
     height: undefined,
     alt: undefined
   });
-  const expected = '<img src="http://example.com/image.jpg"/>';
+  const expected = '<img src="http://example.com/image.jpg"></img>';
   t.is(actual, expected);
 });
 
@@ -27,7 +27,7 @@ test('render() img, with alt-attribute', t => {
     height: undefined,
     alt: 'beep boop'
   });
-  const expected = '<img src="http://example.com/image.jpg" alt="beep boop"/>';
+  const expected = '<img src="http://example.com/image.jpg" alt="beep boop"></img>';
   t.is(actual, expected);
 });
 
@@ -39,7 +39,7 @@ test('render() img with width & height', t => {
     height: 200,
     alt: undefined
   });
-  const expected = '<img src="http://example.com/image.jpg" width="100" height="200"/>';
+  const expected = '<img src="http://example.com/image.jpg" width="100" height="200"></img>';
   t.is(actual, expected);
 });
 
@@ -57,8 +57,8 @@ test('render() video  ', t => {
     height: 200
   });
   const expected = tsml`<video width="100" height="200">
-    <source src="http://example.com/video.mp4"/>
-    <source src="http://example.com/video2.mp4" type="video/mp4"/>
+    <source src="http://example.com/video.mp4"></source>
+    <source src="http://example.com/video2.mp4" type="video/mp4"></source>
   </video>`;
   t.is(actual, expected);
 });
@@ -68,7 +68,7 @@ test('render() youtube iframe', t => {
     type: 'youtube',
     youtubeId: 'pDVmldTurqk'
   });
-  const expected = '<iframe src="https://www.youtube.com/embed/pDVmldTurqk" width="640" height="360" frameborder="0" allowfullscreen=""></iframe>';
+  const expected = '<iframe src="https://www.youtube.com/embed/pDVmldTurqk" width="640" height="360" frameborder="0" allowfullscreen="true"></iframe>';
   t.is(actual, expected);
 });
 
@@ -79,7 +79,7 @@ test('render() youtube iframe custom width & height', t => {
     width: 800,
     height: 600
   });
-  const expected = '<iframe src="https://www.youtube.com/embed/pDVmldTurqk" width="800" height="600" frameborder="0" allowfullscreen=""></iframe>';
+  const expected = '<iframe src="https://www.youtube.com/embed/pDVmldTurqk" width="800" height="600" frameborder="0" allowfullscreen="true"></iframe>';
   t.is(actual, expected);
 });
 
@@ -87,8 +87,8 @@ test('render() tweet - normal', t => {
   const input = {
     type: 'twitter',
     text: [
-      { content: 'GIF vs. JIF… This ', href: null },
-      { content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6' }
+      {content: 'GIF vs. JIF… This ', href: null},
+      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
     ],
     url: 'https://twitter.com/MattNavarra/status/684690494841028608',
     date: 'January 6, 2016',
@@ -100,7 +100,7 @@ test('render() tweet - normal', t => {
   };
   const actual = render(input);
   const expected = tsml`<blockquote class="twitter-tweet" data-lang="en">
-    <p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>\u2014 Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a>
+    <p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608">January 6, 2016</a>
   </blockquote>`;
   t.is(actual, expected);
 });
@@ -109,8 +109,8 @@ test('render() tweet with no user slug', t => {
   const input = {
     type: 'twitter',
     text: [
-      { content: 'GIF vs. JIF… This ', href: null },
-      { content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6' }
+      {content: 'GIF vs. JIF… This ', href: null},
+      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
     ],
     url: 'https://twitter.com/MattNavarra/status/684690494841028608',
     date: 'January 6, 2016',
@@ -129,8 +129,8 @@ test('render() tweet with no user name', t => {
   const input = {
     type: 'twitter',
     text: [
-      { content: 'GIF vs. JIF… This ', href: null },
-      { content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6' }
+      {content: 'GIF vs. JIF… This ', href: null},
+      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
     ],
     url: 'https://twitter.com/MattNavarra/status/684690494841028608',
     date: 'January 6, 2016',
@@ -149,8 +149,8 @@ test('render() tweet with no user', t => {
   const input = {
     type: 'twitter',
     text: [
-      { content: 'GIF vs. JIF… This ', href: null },
-      { content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6' }
+      {content: 'GIF vs. JIF… This ', href: null},
+      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
     ],
     url: 'https://twitter.com/MattNavarra/status/684690494841028608',
     date: 'January 6, 2016',
@@ -229,8 +229,7 @@ test('render() facebook - video', t => {
       url: 'https://www.facebook.com/MicMedia/'
     },
     text: [{
-      content: 'Men and women *both* have nipples — so why do we ' +
-        'only shame women for showing theirs... especially when they\'re breastfeeding?',
+      content: 'Men and women *both* have nipples — so why do we only shame women for showing theirs... especially when they\'re breastfeeding?',
       href: null
     }],
     headline: 'Why is breastfeeding in public such a big deal?',
@@ -281,7 +280,7 @@ test('render() custom, allow fullscreen', t => {
     allowFullscreen: true
   };
   const actual = render(input);
-  const expected = '<iframe src="http://custom.com" width="600" height="600" frameborder="0" allowfullscreen=""></iframe>';
+  const expected = '<iframe src="http://custom.com" width="600" height="600" frameborder="0" allowfullscreen="true"></iframe>';
   t.is(actual, expected);
 });
 
