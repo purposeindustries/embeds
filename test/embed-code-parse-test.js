@@ -1,7 +1,6 @@
-/* eslint-disable max-len */
-import tsml from 'tsml'; // eslint-disable-line import/no-extraneous-dependencies
 import test from './tape-wrapper';
-import { parseInput } from '../lib';
+import {parseInput} from '../lib';
+import tsml from 'tsml';
 
 test('parse invalid input', t => {
   t.is(parseInput(), null);

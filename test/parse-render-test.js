@@ -1,8 +1,9 @@
-import { renderToStaticMarkup } from 'react-dom/server'; // eslint-disable-line
-import queryDom from 'query-dom'; // eslint-disable-line
 import test from './tape-wrapper';
+
 import fixtures from './fixtures';
-import { render, parse as _parse } from '../lib';
+import {render, parse as _parse} from '../lib';
+import {renderString, tree} from 'deku';
+import queryDom from 'query-dom';
 
 const parse = process.browser
   ? (str) => {
@@ -13,7 +14,7 @@ const parse = process.browser
   : str => _parse(queryDom(str));
 
 const parseAndRender = input =>
-  renderToStaticMarkup(render(parse(input)));
+  renderString(tree(render(parse(input))));
 
 test('parse() + render() facebook - post', t => {
   const input = fixtures.facebookPost;
