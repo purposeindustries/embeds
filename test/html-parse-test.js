@@ -548,6 +548,17 @@ test('parse() tumblr embed', t => {
   t.deepEqual(actual, expected);
 });
 
+test('parse() tidal video', t => {
+  const input = fixtures.tidalVideo;
+  const actual = parse(input);
+  const expected = {
+    type: 'tidal',
+    dataType: 'v',
+    dataId: '63196259'
+  };
+  t.deepEqual(actual, expected);
+});
+
 test('parse() custom embed', t => {
   const input = '<iframe src="http://custom.com" width="600" height="600" frameborder="0"></iframe>';
   const actual = parse(input);
