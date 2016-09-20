@@ -192,6 +192,13 @@ test('parse() tweet - normal', t => {
   t.deepEqual(actual, expected);
 });
 
+test('parse() tweet - no a tag', t => {
+  const input = `<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This </p>&mdash; Matt (foo) Navarra (@MattNavarra)</blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const actual = parse(input);
+  const expected = null;
+  t.deepEqual(actual, expected);
+});
+
 test('parse() tweet - video', t => {
   const input = `<blockquote class="twitter-video" data-lang="en"><p lang="en" dir="ltr">Surfer <a href="https://twitter.com/bethanyhamilton">@bethanyhamilton</a>, who lost her arm in a 2003 shark attack, finishes 3rd in <a href="https://twitter.com/wsl">@wsl</a> Fiji. <a href="https://twitter.com/hashtag/VideoOfTheDay?src=hash">#VideoOfTheDay</a> <a href="https://t.co/elSAwTdP6L">pic.twitter.com/elSAwTdP6L</a></p>&mdash; Twitter Video (@video) <a href="https://twitter.com/video/status/737840608895762432">June 1, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
   const actual = parse(input);
@@ -371,6 +378,13 @@ test('parse() facebook - post', t => {
       href: null
     }]
   };
+  t.deepEqual(actual, expected);
+});
+
+test('parse() facebook - post with invalid link', t => {
+  const input = fixtures.facebookPostInvalid;
+  const actual = parse(input);
+  const expected = null;
   t.deepEqual(actual, expected);
 });
 
