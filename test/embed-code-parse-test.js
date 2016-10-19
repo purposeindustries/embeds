@@ -55,6 +55,7 @@ test('giphy', t => {
   t.deepEqual(parseInput('http://giphy.com/embed/3oxRmeLK7bjcq0CCCA'), expected);
   t.deepEqual(parseInput('//giphy.com/embed/3oxRmeLK7bjcq0CCCA'), expected);
   t.deepEqual(parseInput('https://giphy.com/gifs/new-girl-fox-new-girl-newgirl-3oxRmeLK7bjcq0CCCA'), expected);
+  t.deepEqual(parseInput('https://giphy.com/gifs/new-girl-fox-new-girl-newgirl-3oxRmeLK7bjcq0CCCA/'), expected);
   t.deepEqual(parseInput('http://giphy.com/gifs/new-girl-fox-new-girl-newgirl-3oxRmeLK7bjcq0CCCA'), expected);
   t.deepEqual(parseInput('//giphy.com/gifs/new-girl-fox-new-girl-newgirl-3oxRmeLK7bjcq0CCCA'), expected);
   t.deepEqual(parseInput(code), expected);
