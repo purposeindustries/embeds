@@ -186,7 +186,7 @@ test('facebook', t => {
   );
   t.deepEqual(parseInput('//facebook.com/zuck/posts/10102593740125791'), expectedPost);
 
-  const expectedPhoto = {
+  const expectedPagePhoto = {
     type: 'facebook',
     embedAs: 'photo',
     user: 'rewire.news',
@@ -194,24 +194,44 @@ test('facebook', t => {
     id: '10152515593211738'
   };
 
-  t.deepEqual(parseInput(photoCode), expectedPhoto);
+  t.deepEqual(parseInput(photoCode), expectedPagePhoto);
   t.deepEqual(
     parseInput('https://www.facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
-    expectedPhoto);
+    expectedPagePhoto);
   t.deepEqual(
     parseInput('http://www.facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
-    expectedPhoto);
+    expectedPagePhoto);
   t.deepEqual(
     parseInput('//www.facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
-    expectedPhoto);
+    expectedPagePhoto);
   t.deepEqual(
     parseInput('https://facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
-    expectedPhoto);
+    expectedPagePhoto);
   t.deepEqual(
     parseInput('http://facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
-    expectedPhoto);
+    expectedPagePhoto);
   t.deepEqual(
     parseInput('//facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
+    expectedPagePhoto);
+
+  const expectedPhoto = {
+    type: 'facebook',
+    embedAs: 'photo',
+    url: 'https://www.facebook.com/photo.php?fbid=10103183415950711',
+    id: '10103183415950711'
+  };
+
+  t.deepEqual(
+    parseInput('https://www.facebook.com/photo.php?fbid=10103183415950711'),
+    expectedPhoto);
+  t.deepEqual(
+    parseInput('http://www.facebook.com/photo.php?fbid=10103183415950711'),
+    expectedPhoto);
+  t.deepEqual(
+    parseInput('//www.facebook.com/photo.php?fbid=10103183415950711'),
+    expectedPhoto);
+  t.deepEqual(
+    parseInput('https://www.facebook.com/photo.php?fbid=10103183415950711&set=pcb.10103183428221121&type=3&theater'),
     expectedPhoto);
 });
 
