@@ -1,6 +1,21 @@
 import test from './tape-wrapper';
 import {parseInput} from '../lib';
 import tsml from 'tsml';
+import {render, parse as _parse} from '../lib';
+import {renderString, tree} from 'deku';
+import queryDom from 'query-dom';
+
+
+const parse = process.browser
+  ? (str) => {
+    const node = document.createElement('div');
+    node.innerHTML = str;
+    return _parse(node.childNodes);
+  }
+  : str => _parse(queryDom(str));
+
+const renderAndParse = input =>
+  parse(renderString(tree(render(input))));
 
 test('parse invalid input', t => {
   t.is(parseInput(), null);
@@ -163,6 +178,11 @@ test('facebook', t => {
     expectedVideo
   );
 
+  t.equals(
+    renderAndParse(expectedVideo).url,
+    expectedVideo.url
+  );
+
   t.deepEqual(parseInput(postCode), expectedPost);
   t.deepEqual(
     parseInput('https://www.facebook.com/zuck/posts/10102593740125791'),
@@ -185,6 +205,11 @@ test('facebook', t => {
     expectedPost
   );
   t.deepEqual(parseInput('//facebook.com/zuck/posts/10102593740125791'), expectedPost);
+
+  t.equals(
+    renderAndParse(expectedPost).url,
+    expectedPost.url
+  );
 
   const expectedPagePhoto = {
     type: 'facebook',
@@ -214,6 +239,11 @@ test('facebook', t => {
     parseInput('//facebook.com/rewire.news/photos/a.102749171737.90216.9432926737/10152515593211738'),
     expectedPagePhoto);
 
+  t.equals(
+    renderAndParse(expectedPagePhoto).url,
+    expectedPagePhoto.url
+  );
+
   const expectedPhoto = {
     type: 'facebook',
     embedAs: 'photo',
@@ -233,6 +263,11 @@ test('facebook', t => {
   t.deepEqual(
     parseInput('https://www.facebook.com/photo.php?fbid=10103183415950711&set=pcb.10103183428221121&type=3&theater'),
     expectedPhoto);
+
+  t.equals(
+    renderAndParse(expectedPhoto).url,
+    expectedPhoto.url
+  );
 });
 
 test('youtube', t => {
@@ -264,6 +299,11 @@ test('youtube', t => {
   t.deepEqual(parseInput('https://youtu.be/I7IdS-PbEgI'), expected);
   t.deepEqual(parseInput('http://youtu.be/I7IdS-PbEgI'), expected);
   t.deepEqual(parseInput('//youtu.be/I7IdS-PbEgI'), expected);
+
+  t.equals(
+    renderAndParse(expected).youtubeId,
+    expected.youtubeId
+  );
 });
 
 test('twitter', t => {
@@ -314,6 +354,11 @@ test('twitter', t => {
     parseInput('//www.twitter.com/thomas_kast/status/709353211455541248'),
     expected
   );
+
+  t.equals(
+    renderAndParse(expected).url,
+    expected.url
+  );
 });
 
 test('tumblr', t => {
@@ -346,6 +391,11 @@ test('tumblr', t => {
     parseInput('//embed.tumblr.com/embed/post/Hj-X2tKsXur2oF91XMwT5w/105825530041'),
     expected
   );
+
+  t.equals(
+    renderAndParse(expected).url,
+    expected.url
+  );
 });
 
 test('vine', t => {
@@ -373,6 +423,11 @@ test('vine', t => {
   t.deepEqual(parseInput('//vine.co/v/iHTTDHz6Z2v'), expected);
   t.deepEqual(parseInput('//vine.co/v/iHTTDHz6Z2v/embed'), expected);
   t.deepEqual(parseInput('//vine.co/v/iHTTDHz6Z2v/embed/simple'), expected);
+
+  t.deepEqual(
+    renderAndParse(expected),
+    expected
+  );
 });
 
 test('imgur', t => {
