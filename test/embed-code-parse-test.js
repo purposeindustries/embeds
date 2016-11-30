@@ -559,3 +559,29 @@ test('scribd', t => {
   t.deepEqual(parseInput(scribdCode), expected);
   t.deepEqual(parseInput('https://www.scribd.com/embeds/320741042/content'), expected);
 });
+
+test('spotify', t => {
+  t.deepEqual(
+    parseInput('https://open.spotify.com/artist/6kBDZFXuLrZgHnvmPu9NsG'),
+    {
+      type: 'spotify',
+      url: 'https://embed.spotify.com/?uri=spotify:artist:6kBDZFXuLrZgHnvmPu9NsG'
+    }
+  );
+
+  t.deepEqual(
+    parseInput('https://open.spotify.com/track/6sEz1Cd0HVXRXuvIw9zAmK'),
+    {
+      type: 'spotify',
+      url: 'https://embed.spotify.com/?uri=spotify:track:6sEz1Cd0HVXRXuvIw9zAmK'
+    }
+  );
+
+  t.deepEqual(
+    parseInput('https://open.spotify.com/user/hamiltonmusical/playlist/4Rf5kHoohcqAS5Qc6gglaX'),
+    {
+      type: 'spotify',
+      url: 'https://embed.spotify.com/?uri=spotify:user:hamiltonmusical:playlist:4Rf5kHoohcqAS5Qc6gglaX'
+    }
+  );
+});
