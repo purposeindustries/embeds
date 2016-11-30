@@ -539,6 +539,7 @@ test('acast', t => {
 
   t.deepEqual(parseInput(acastCode), expected);
   t.deepEqual(parseInput('https://embed.acast.com/specialrelationship/-1-terrorismandnationalsecurity'), expected);
+  t.deepEqual(parseInput('https://www.acast.com/specialrelationship/-1-terrorismandnationalsecurity'), expected);
 });
 
 test('scribd', t => {
