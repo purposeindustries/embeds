@@ -532,11 +532,14 @@ test('acast', t => {
     type: 'acast',
     channel: 'specialrelationship',
     url: 'https://embed.acast.com/specialrelationship/-1-terrorismandnationalsecurity',
-    name: '-1-terrorismandnationalsecurity'
+    name: '-1-terrorismandnationalsecurity',
+    width: 540,
+    height: 540
   };
 
   t.deepEqual(parseInput(acastCode), expected);
   t.deepEqual(parseInput('https://embed.acast.com/specialrelationship/-1-terrorismandnationalsecurity'), expected);
+  t.deepEqual(parseInput('https://www.acast.com/specialrelationship/-1-terrorismandnationalsecurity'), expected);
 });
 
 test('scribd', t => {
