@@ -281,6 +281,27 @@ test('parse() tweet - no id', t => {
   t.deepEqual(actual, expected);
 });
 
+test('parse() tweet - href has query string', t => {
+  const input = `<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">GIF vs. JIF… This <a href="https://t.co/qFAHWgdbL6">pic.twitter.com/qFAHWgdbL6</a></p>&mdash; Matt (foo) Navarra (@MattNavarra) <a href="https://twitter.com/MattNavarra/status/684690494841028608?ref_src=twsrc%5Etfw">January 6, 2016</a></blockquote><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>`;
+  const actual = parse(input);
+  const expected = {
+    type: 'twitter',
+    embedAs: 'tweet',
+    text: [
+      {content: 'GIF vs. JIF… This ', href: null},
+      {content: 'pic.twitter.com/qFAHWgdbL6', href: 'https://t.co/qFAHWgdbL6'}
+    ],
+    url: 'https://twitter.com/MattNavarra/status/684690494841028608?ref_src=twsrc%5Etfw',
+    date: 'January 6, 2016',
+    user: {
+      slug: 'MattNavarra',
+      name: 'Matt (foo) Navarra'
+    },
+    id: '684690494841028608'
+  };
+  t.deepEqual(actual, expected);
+});
+
 test('parse() instagram http iframe', t => {
   const input = `<iframe src="http://instagram.com/p/fdx1CSuEPV/embed"></iframe>`;
   const actual = parse(input);
