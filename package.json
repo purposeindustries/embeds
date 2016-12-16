@@ -1,6 +1,6 @@
 {
   "name": "embeds",
-  "version": "2.11.2",
+  "version": "2.11.3",
   "description": "Parse & render embeds",
   "main": "dist/index.js",
   "scripts": {
